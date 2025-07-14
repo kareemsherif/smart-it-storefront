@@ -4,9 +4,11 @@ import { ShoppingCart, Shield, Network, Server, Headphones, Star, Phone, Mail, M
 import { ContactForm } from '@/components/ContactForm';
 import { QuoteDialog } from '@/components/QuoteDialog';
 import { useToast } from '@/hooks/useToast';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -39,7 +41,7 @@ const Index = () => {
             
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection('home')} className="text-slate-300 hover:text-indigo-400 transition-colors">الرئيسية</button>
-              <button onClick={() => scrollToSection('products')} className="text-slate-300 hover:text-indigo-400 transition-colors">المنتجات</button>
+              <button onClick={() => navigate('/products')} className="text-slate-300 hover:text-indigo-400 transition-colors">المنتجات</button>
               <button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-indigo-400 transition-colors">الخدمات</button>
               <button onClick={() => scrollToSection('about')} className="text-slate-300 hover:text-indigo-400 transition-colors">من نحن</button>
               <button onClick={() => scrollToSection('contact')} className="text-slate-300 hover:text-indigo-400 transition-colors">تواصل معنا</button>
@@ -70,7 +72,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
-                onClick={() => scrollToSection('products')}
+                onClick={() => navigate('/products')}
                 className="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
                 استكشف المنتجات
