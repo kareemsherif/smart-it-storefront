@@ -1,8 +1,24 @@
 
 import React from 'react';
 import { ShoppingCart, Shield, Network, Server, Headphones, Star, Phone, Mail, MapPin, ChevronRight, Wifi, Router, HardDrive } from 'lucide-react';
+import { ContactForm } from '@/components/ContactForm';
+import { QuoteDialog } from '@/components/QuoteDialog';
+import { useToast } from '@/hooks/useToast';
 
 const Index = () => {
+  const { toast } = useToast();
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSpecialOffer = () => {
+    toast.success('تم تطبيق خصم 20% على طلبك التالي! صالح لمدة 30 يوم');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900">
       {/* Header */}
@@ -22,17 +38,19 @@ const Index = () => {
             </div>
             
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="text-slate-300 hover:text-indigo-400 transition-colors">الرئيسية</a>
-              <a href="#products" className="text-slate-300 hover:text-indigo-400 transition-colors">المنتجات</a>
-              <a href="#services" className="text-slate-300 hover:text-indigo-400 transition-colors">الخدمات</a>
-              <a href="#about" className="text-slate-300 hover:text-indigo-400 transition-colors">من نحن</a>
-              <a href="#contact" className="text-slate-300 hover:text-indigo-400 transition-colors">تواصل معنا</a>
+              <button onClick={() => scrollToSection('home')} className="text-slate-300 hover:text-indigo-400 transition-colors">الرئيسية</button>
+              <button onClick={() => scrollToSection('products')} className="text-slate-300 hover:text-indigo-400 transition-colors">المنتجات</button>
+              <button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-indigo-400 transition-colors">الخدمات</button>
+              <button onClick={() => scrollToSection('about')} className="text-slate-300 hover:text-indigo-400 transition-colors">من نحن</button>
+              <button onClick={() => scrollToSection('contact')} className="text-slate-300 hover:text-indigo-400 transition-colors">تواصل معنا</button>
             </div>
             
             <div className="flex items-center space-x-4">
-              <button className="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                طلب عرض سعر
-              </button>
+              <QuoteDialog>
+                <button className="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                  طلب عرض سعر
+                </button>
+              </QuoteDialog>
             </div>
           </nav>
         </div>
@@ -51,10 +69,16 @@ const Index = () => {
               مع خدمات الدعم الفني والصيانة المتخصصة
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+              <button 
+                onClick={() => scrollToSection('products')}
+                className="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              >
                 استكشف المنتجات
               </button>
-              <button className="border-2 border-indigo-400 text-indigo-400 px-8 py-4 rounded-xl font-semibold hover:bg-indigo-400 hover:text-white transition-all duration-300">
+              <button 
+                onClick={() => scrollToSection('contact')}
+                className="border-2 border-indigo-400 text-indigo-400 px-8 py-4 rounded-xl font-semibold hover:bg-indigo-400 hover:text-white transition-all duration-300"
+              >
                 تواصل معنا
               </button>
             </div>
@@ -92,9 +116,11 @@ const Index = () => {
                   إدارة مركزية سهلة
                 </li>
               </ul>
-              <button className="w-full bg-gradient-to-r from-indigo-500 to-cyan-400 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
-                اطلب الآن
-              </button>
+              <QuoteDialog productType="router">
+                <button className="w-full bg-gradient-to-r from-indigo-500 to-cyan-400 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+                  اطلب الآن
+                </button>
+              </QuoteDialog>
             </div>
 
             {/* Switch Card */}
@@ -118,9 +144,11 @@ const Index = () => {
                   مراقبة الشبكة في الوقت الفعلي
                 </li>
               </ul>
-              <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
-                اطلب الآن
-              </button>
+              <QuoteDialog productType="switch">
+                <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+                  اطلب الآن
+                </button>
+              </QuoteDialog>
             </div>
 
             {/* Firewall Card */}
@@ -144,9 +172,11 @@ const Index = () => {
                   تقارير أمنية مفصلة
                 </li>
               </ul>
-              <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
-                اطلب الآن
-              </button>
+              <QuoteDialog productType="firewall">
+                <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+                  اطلب الآن
+                </button>
+              </QuoteDialog>
             </div>
           </div>
         </div>
@@ -199,39 +229,7 @@ const Index = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
               <h4 className="text-2xl font-bold text-white mb-6">احصل على استشارة مجانية</h4>
-              <form className="space-y-6">
-                <div>
-                  <input 
-                    type="text" 
-                    placeholder="الاسم الكامل"
-                    className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none transition-colors"
-                  />
-                </div>
-                <div>
-                  <input 
-                    type="email" 
-                    placeholder="البريد الإلكتروني"
-                    className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none transition-colors"
-                  />
-                </div>
-                <div>
-                  <input 
-                    type="tel" 
-                    placeholder="رقم الهاتف"
-                    className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none transition-colors"
-                  />
-                </div>
-                <div>
-                  <textarea 
-                    rows={4}
-                    placeholder="كيف يمكننا مساعدتك؟"
-                    className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-indigo-500 focus:outline-none transition-colors resize-none"
-                  ></textarea>
-                </div>
-                <button className="w-full bg-gradient-to-r from-indigo-500 to-cyan-400 text-white py-3 rounded-lg font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                  إرسال الطلب
-                </button>
-              </form>
+              <ContactForm />
             </div>
             
             <div className="space-y-8">
@@ -273,7 +271,10 @@ const Index = () => {
               <div className="bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 p-6 rounded-xl border border-indigo-500/20">
                 <h5 className="text-xl font-bold text-white mb-3">عرض خاص</h5>
                 <p className="text-slate-300 mb-4">احصل على خصم 20% على جميع أجهزة الشبكات عند الطلب هذا الشهر</p>
-                <button className="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition-all">
+                <button 
+                  onClick={handleSpecialOffer}
+                  className="bg-gradient-to-r from-indigo-500 to-cyan-400 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition-all"
+                >
                   استفد من العرض
                 </button>
               </div>
